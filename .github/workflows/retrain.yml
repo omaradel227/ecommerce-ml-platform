@@ -1,0 +1,50 @@
+name: Retrain Models
+
+on:
+  push:
+    paths:
+      - 'data/**'
+      - 'pipelines/**'
+  schedule:
+    - cron: '0 0 * * 0'  
+  workflow_dispatch:     
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run preprocessing
+        run: |
+          python3 pipelines/preprocess.py
+
+      - name: Retrain purchase predictor
+        run: |
+          python3 pipelines/train_predictor.py
+
+      - name: Retrain recommender
+        run: |
+          python3 pipelines/train_recommender.py
+
+      - name: Run drift monitoring
+        run: |
+          python3 monitoring/drift.py
+
+      - name: Upload model artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: trained-models
+          path: models/
+          retention-days: 30
