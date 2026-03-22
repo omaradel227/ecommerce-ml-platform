@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+
+  api:
+    build: .
+    container_name: ecommerce-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+      - ./data/processed:/app/data/processed
+    environment:
+      - PYTHONPATH=/app
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  mlflow:
+    image: python:3.11-slim
+    container_name: ecommerce-mlflow
+    working_dir: /app
+    volumes:
+      - ./mlruns:/app/mlruns
+      - ./mlflow.db:/app/mlflow.db
+    ports:
+      - "5001:5001"
+    command: >
+      bash -c "pip install mlflow -q &&
+               mlflow server
+               --host 0.0.0.0
+               --port 5001
+               --backend-store-uri sqlite:///mlflow.db
+               --default-artifact-root ./mlruns"
+    restart: unless-stopped

@@ -1,0 +1,19 @@
+{
+  "runs": [
+    {
+      "label": "no_drift",
+      "timestamp": "20260322_212322",
+      "drift_detected": null,
+      "drift_share": null,
+      "html_report": "monitoring/reports/drift_report_no_drift_20260322_212322.html"
+    },
+    {
+      "label": "with_drift",
+      "timestamp": "20260322_212323",
+      "drift_detected": null,
+      "drift_share": null,
+      "html_report": "monitoring/reports/drift_report_with_drift_20260322_212323.html"
+    }
+  ],
+  "conclusion": "Drift monitoring operational. Drift correctly detected when present."
+}

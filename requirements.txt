@@ -1,0 +1,42 @@
+# Data processing
+pandas
+numpy
+scikit-learn
+imbalanced-learn
+
+# ML models
+xgboost
+scikit-surprise
+torch
+torchvision
+
+# ONNX
+onnx
+onnxruntime
+onnxmltools
+onnxscript
+skl2onnx
+
+# MLflow
+mlflow
+
+# DVC
+dvc
+
+# Monitoring
+evidently
+
+# API
+fastapi
+uvicorn
+pydantic
+requests
+pillow
+
+# Visualization
+matplotlib
+
+# Utilities
+python-multipart
+pickle5
+langdetect
